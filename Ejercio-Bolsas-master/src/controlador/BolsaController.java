@@ -47,6 +47,7 @@ public class BolsaController {
         for (int i = 0; i < tam; i++){
             Elemento e = new Elemento();
             e.setTipo(tipo);
+            e.setCaracteristica(NCOMUN);
             elementos[i] = e;
         }
         bolsa.setElemento(elementos);
@@ -72,6 +73,12 @@ public class BolsaController {
         }
         
     }
+    
+    public boolean modificarElemento(Elemento elemento, Integer pos) throws IndexOutOfBoundsException{
+        getBolsa().getElemento()[pos] =  elemento;
+        return true;
+    }
+    
     public int verificarPosicion() {
         int pos = -1;//este vacio
         //0 hasta limite real

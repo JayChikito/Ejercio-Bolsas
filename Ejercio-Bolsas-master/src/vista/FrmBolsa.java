@@ -18,8 +18,8 @@ import vista.utilidades.Utilidades;
 public class FrmBolsa extends javax.swing.JDialog {
 
     private BolsaController bc;
-    private BolsaController bc1;
     private ModeloTablaElemento modelo = new ModeloTablaElemento();
+    private Integer fila = -1;
 
     /**
      * Creates new form FrmBolsa
@@ -66,13 +66,13 @@ public class FrmBolsa extends javax.swing.JDialog {
         if (txtCaracteristica.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Llene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            if (bc != null) {
+            if (bc != null && bc.getElemento() != null) {
 
                 bc.getElemento().setCaracteristica(txtCaracteristica.getText());
                 try {
 
-                    bc.guardarElemento(bc.getElemento());
-                    JOptionPane.showMessageDialog(null, "Se ha guardado", "Guardado", JOptionPane.INFORMATION_MESSAGE);
+                    bc.modificarElemento(bc.getElemento(), fila);
+                    JOptionPane.showMessageDialog(null, "Se ha modificado", "Guardado", JOptionPane.INFORMATION_MESSAGE);
                     limpiar();
 
                 } catch (Exception e) {
@@ -105,6 +105,8 @@ public class FrmBolsa extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtCaracteristica = new javax.swing.JTextArea();
         btnAgregar = new javax.swing.JButton();
+        lblTipoE = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -157,14 +159,14 @@ public class FrmBolsa extends javax.swing.JDialog {
 
         jLabel3.setText("Caracteristicas:");
         jPanel3.add(jLabel3);
-        jLabel3.setBounds(10, 30, 100, 17);
+        jLabel3.setBounds(200, 30, 100, 17);
 
         txtCaracteristica.setColumns(20);
         txtCaracteristica.setRows(5);
         jScrollPane2.setViewportView(txtCaracteristica);
 
         jPanel3.add(jScrollPane2);
-        jScrollPane2.setBounds(120, 20, 220, 90);
+        jScrollPane2.setBounds(310, 20, 220, 90);
 
         btnAgregar.setText("Actualizar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -174,6 +176,19 @@ public class FrmBolsa extends javax.swing.JDialog {
         });
         jPanel3.add(btnAgregar);
         btnAgregar.setBounds(550, 20, 100, 23);
+
+        lblTipoE.setText("TIPO: NO DEFINIDO");
+        jPanel3.add(lblTipoE);
+        lblTipoE.setBounds(20, 30, 120, 17);
+
+        jButton1.setText("SELECCIONAR");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jButton1);
+        jButton1.setBounds(40, 70, 120, 23);
 
         jPanel1.add(jPanel3);
         jPanel3.setBounds(10, 300, 680, 310);
@@ -319,8 +334,21 @@ public class FrmBolsa extends javax.swing.JDialog {
 
     private void cbxSeleccionarBolsaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxSeleccionarBolsaActionPerformed
         // TODO add your handling code here:
-        cargarDatosBolsaCombo(); 
+        cargarDatosBolsaCombo();
     }//GEN-LAST:event_cbxSeleccionarBolsaActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        fila = tbltabla.getSelectedRow();
+        lblTipoE.setText("TIPO: NO DEFINIDO");
+        if (fila >= 0) {
+            bc.setElemento(modelo.getElementos()[fila]);
+            lblTipoE.setText("TIPO: "+bc.getElemento().getTipo().toString());
+            txtCaracteristica.setText(bc.getElemento().getCaracteristica());
+        }else{
+            JOptionPane.showMessageDialog(null,"Seleccione un dato de la tabla","Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
 
     private void crearArregloBolsa() {
         bc = new BolsaController(Integer.parseInt(cbxNumeroBolsa.getSelectedItem().toString()));
@@ -334,12 +362,13 @@ public class FrmBolsa extends javax.swing.JDialog {
             bc.setBolsa(Utilidades.getBolsaCombo(cbxSeleccionarBolsa));
             if (bc.getBolsa().getElemento() != null) {
                 lblBolsa.setText("BOLSA: " + bc.getBolsa().getNombre() + " Elementos " + bc.getBolsa().getElemento().length);
-                cargarTabla();
+
             } else {
                 lblBolsa.setText("BOLSA: " + bc.getBolsa().getNombre() + " Sin Elementos ");
                 JOptionPane.showMessageDialog(null, "Porfavor actualice los datos de esta bolsa", "Error", JOptionPane.ERROR_MESSAGE);
 
             }
+            cargarTabla();
         } catch (Exception e) {
             System.out.println("No se ha cargado primero");
         }
@@ -401,6 +430,7 @@ public class FrmBolsa extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> cbxNumeroElementos;
     private javax.swing.JComboBox<String> cbxSeleccionarBolsa;
     private javax.swing.JComboBox<String> cbxTipoBolsa;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
@@ -416,6 +446,7 @@ public class FrmBolsa extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblBolsa;
+    private javax.swing.JLabel lblTipoE;
     private javax.swing.JTable tbltabla;
     private javax.swing.JTextArea txtCaracteristica;
     // End of variables declaration//GEN-END:variables
