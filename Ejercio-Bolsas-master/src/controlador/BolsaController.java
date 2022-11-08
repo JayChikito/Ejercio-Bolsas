@@ -42,8 +42,14 @@ public class BolsaController {
 //       // bolsa.setNombre(nombre);
 //    }
 
-    public void crearArregloElemento(Integer tam){
-        bolsa.setElemento(new Elemento[tam]);
+    public void crearArregloElemento(Integer tam, Tipo tipo){
+        Elemento elementos[] = new Elemento[tam];
+        for (int i = 0; i < tam; i++){
+            Elemento e = new Elemento();
+            e.setTipo(tipo);
+            elementos[i] = e;
+        }
+        bolsa.setElemento(elementos);
     }
             
     public Bolsa[] getBolsas() {
