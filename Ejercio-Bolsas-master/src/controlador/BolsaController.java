@@ -35,13 +35,17 @@ public class BolsaController {
         }
     }
     
-    public BolsaController(String nombre, Integer tamanio) {
-        getBolsa().setNombre(nombre);
-        getBolsa().setTipo(nombre);
-        getBolsa().setElemento(new Elemento[tamanio]);
-       // bolsa.setNombre(nombre);
-    }
+//    public BolsaController(String nombre, Integer tamanio) {
+//        getBolsa().setNombre(nombre);
+//        getBolsa().setTipo(nombre);
+//        getBolsa().setElemento(new Elemento[tamanio]);
+//       // bolsa.setNombre(nombre);
+//    }
 
+    public void crearArregloElemento(Integer tam){
+        bolsa.setElemento(new Elemento[tam]);
+    }
+            
     public Bolsa[] getBolsas() {
         return bolsas;
     }

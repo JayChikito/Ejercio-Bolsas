@@ -309,6 +309,13 @@ public class FrmBolsa extends javax.swing.JDialog {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        if(!bc.getBolsa().getNombre().equalsIgnoreCase(BolsaController.NCOMUN)){
+            Integer i = JOptionPane.showConfirmDialog(this, "Esta seguro de cambiar los datos de esta bolsa");
+            if(i == JOptionPane.OK_OPTION){
+               cambiarTipoBolsa();
+            }
+        }else cambiarTipoBolsa();
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void cbxSeleccionarBolsaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxSeleccionarBolsaItemStateChanged
@@ -327,15 +334,22 @@ public class FrmBolsa extends javax.swing.JDialog {
         try {
             bc.setBolsa(Utilidades.getBolsaCombo(cbxSeleccionarBolsa));
             if (bc.getBolsa().getElemento() != null) {
-                lblBolsa.setText("BOLSA: "+bc.getBolsa().getNombre()+ " Elementos" + bc.getBolsa().getElemento().length);
+                lblBolsa.setText("BOLSA: "+bc.getBolsa().getNombre()+ " Elementos " + bc.getBolsa().getElemento().length);
             } else {
-                lblBolsa.setText("BOLSA: "+bc.getBolsa().getNombre()+ " Sin Elementos");
+                lblBolsa.setText("BOLSA: "+bc.getBolsa().getNombre()+ " Sin Elementos ");
                 JOptionPane.showMessageDialog(null, "Porfavor actualice los datos de esta bolsa", "Error", JOptionPane.ERROR_MESSAGE);
 
             }
         } catch (Exception e) {
             System.out.println("No se ha cargado primero");
         }
+    }
+    
+    private void cambiarTipoBolsa(){
+        
+        bc.getBolsa().setNombre(Utilidades.getTipoCombo(cbxTipoBolsa).toString());
+        bc.getBolsa().setTipo(bc.getBolsa().getNombre());
+        bc.crearArregloElemento(Integer.parseInt(cbxNumeroElementos.getSelectedItem().toString()));
     }
 
     /**
