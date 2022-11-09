@@ -6,6 +6,11 @@
 package vista.utilidades;
 
 import controlador.BolsaController;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import javax.swing.JComboBox;
 import modelo.Bolsa;
 import modelo.Tipo;
@@ -15,37 +20,64 @@ import modelo.Tipo;
  * @author DEEPIN
  */
 public class Utilidades {
-    public static JComboBox cargarComboTipo(JComboBox cbx){
+
+    public static String DIRCARPDATA = "data";
+
+    public static JComboBox cargarComboTipo(JComboBox cbx) {
         cbx.removeAllItems();
-        for(Tipo tipo: Tipo.values()) {
+        for (Tipo tipo : Tipo.values()) {
             cbx.addItem(tipo);
         }
         return cbx;
     }
-    
-    public static Tipo getTipoCombo(JComboBox cbx){
-        return (Tipo)cbx.getSelectedItem();
+
+    public static Tipo getTipoCombo(JComboBox cbx) {
+        return (Tipo) cbx.getSelectedItem();
     }
-//    
-//    public boolean guardarArchivo(Bolsa[] bolsas){
-//        try {
-//            FIle archivo = new FIle(DIRCARDATA+File.separtorChar+"bolsa"
-//        } catch (Exception e) {
-//            return e;
-//        }
-//    }
-    
-    public static JComboBox cargarComboBolsa(JComboBox cbx, BolsaController bc){
+
+    public static JComboBox cargarComboBolsa(JComboBox cbx, BolsaController bc) {
         cbx.removeAllItems();
-        for(int i = 0; i < bc.getBolsas().length; i++){
+        for (int i = 0; i < bc.getBolsas().length; i++) {
             cbx.addItem(bc.getBolsas()[i]);
         }
         return cbx;
     }
+
+    public static Bolsa getBolsaCombo(JComboBox cbx) {
+        return (Bolsa) cbx.getSelectedItem();
+    }
+
+    public static boolean guardarArchivo(Bolsa[] bolsas){
+        try {
+            File archivo = new File(DIRCARPDATA + File.separatorChar + "bolsa.dato");
+            FileOutputStream salida = new FileOutputStream(archivo);
+            ObjectOutputStream ous = new ObjectOutputStream(salida);
+            ous.writeObject(bolsas);
+            ous.flush();
+            ous.close();
+            salida.close();
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error" + e);
+            return false;
+        }
+    }
     
-    public static Bolsa getBolsaCombo(JComboBox cbx){
-        return (Bolsa)cbx.getSelectedItem();
+    public static Bolsa[] cargarArchivo(){
+        Bolsa[] bolsas = null;
+        try {
+            File archivo = new File(DIRCARPDATA+File.separatorChar+"bolsa.dato");
+            FileInputStream entrada = new FileInputStream(archivo);
+            ObjectInputStream ous = new ObjectInputStream(entrada);
+            bolsas = (Bolsa[])ous.readObject();
+            ous.close();
+            entrada.close();
+        } catch (Exception e) {
+            System.out.println("Error"+e);
+        }
+        return bolsas;
     }
 }
 
 
+            

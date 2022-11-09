@@ -6,11 +6,13 @@
 
 package modelo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author DEEPIN
  */
-public class Elemento {
+public class Elemento implements Serializable {
     private String caracteristica;
     private Tipo tipo;
 

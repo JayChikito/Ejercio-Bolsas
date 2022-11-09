@@ -6,11 +6,13 @@
 
 package modelo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author DEEPIN
  */
-public class Bolsa {
+public class Bolsa implements Serializable {
     private String nombre;
     private String tipo;
     private Elemento elemento[];
