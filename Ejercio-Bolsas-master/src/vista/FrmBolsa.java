@@ -119,12 +119,14 @@ public class FrmBolsa extends javax.swing.JDialog {
         jButton3 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         cbxNumeroElementos = new javax.swing.JComboBox<>();
+        btnSalir = new javax.swing.JButton();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        jmenuGuardar = new javax.swing.JMenuItem();
+        jmenuCargar = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        jmenuGuardarJson = new javax.swing.JMenuItem();
+        jmenuCargarJson = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Datos de bolsa");
@@ -270,35 +272,52 @@ public class FrmBolsa extends javax.swing.JDialog {
         jPanel1.add(jPanel4);
         jPanel4.setBounds(10, 10, 680, 150);
 
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnSalir);
+        btnSalir.setBounds(600, 620, 77, 23);
+
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(10, 10, 700, 630);
+        jPanel1.setBounds(10, 20, 700, 660);
 
         jMenu3.setText("File");
 
-        jMenuItem1.setText("Guardar");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jmenuGuardar.setText("Guardar");
+        jmenuGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jmenuGuardarActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem1);
+        jMenu3.add(jmenuGuardar);
 
-        jMenuItem2.setText("Cargar");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        jmenuCargar.setText("Cargar");
+        jmenuCargar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                jmenuCargarActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem2);
+        jMenu3.add(jmenuCargar);
         jMenu3.add(jSeparator1);
 
-        jMenuItem3.setText("Salir");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        jmenuGuardarJson.setText("Guardar Json");
+        jmenuGuardarJson.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                jmenuGuardarJsonActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem3);
+        jMenu3.add(jmenuGuardarJson);
+
+        jmenuCargarJson.setText("Cargar Json");
+        jmenuCargarJson.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmenuCargarJsonActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jmenuCargarJson);
 
         jMenuBar2.add(jMenu3);
 
@@ -306,7 +325,7 @@ public class FrmBolsa extends javax.swing.JDialog {
 
         getAccessibleContext().setAccessibleName("Datos de Bolsa");
 
-        setSize(new java.awt.Dimension(722, 719));
+        setSize(new java.awt.Dimension(731, 746));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -363,7 +382,7 @@ public class FrmBolsa extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButton1MouseClicked
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jmenuGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmenuGuardarActionPerformed
         // TODO add your handling code here:
         if (bc != null) {
             if (Utilidades.guardarArchivo(bc.getBolsas())) {
@@ -377,9 +396,9 @@ public class FrmBolsa extends javax.swing.JDialog {
 
         }
 
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jmenuGuardarActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void jmenuCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmenuCargarActionPerformed
         // TODO add your handling code here:
 
         bc = new BolsaController(1);
@@ -391,16 +410,44 @@ public class FrmBolsa extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "No se pudo cargar", "Error", JOptionPane.ERROR_MESSAGE);
 
         }
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_jmenuCargarActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
         Integer sel = JOptionPane.showConfirmDialog(this, "¿Esta seguro que desea salir?");
         if(JOptionPane.OK_OPTION == sel){
             
             System.exit(0);
         }
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void jmenuGuardarJsonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmenuGuardarJsonActionPerformed
+        // TODO add your handling code here:
+        if (bc != null) {
+            if (Utilidades.guardarJson(bc.getBolsas())) {
+                JOptionPane.showMessageDialog(null, "Se ha guardado correctamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al guardar el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Genere una bolsa", "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }//GEN-LAST:event_jmenuGuardarJsonActionPerformed
+
+    private void jmenuCargarJsonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmenuCargarJsonActionPerformed
+        // TODO add your handling code here:
+        bc = new BolsaController(1);
+        bc.setBolsas(Utilidades.cargarJson());
+        if (bc.getBolsas() != null) {
+            Utilidades.cargarComboBolsa(cbxSeleccionarBolsa, bc);
+            btnCrearBolsas.setEnabled(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo cargar", "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }//GEN-LAST:event_jmenuCargarJsonActionPerformed
 
     private void crearArregloBolsa() {
         bc = new BolsaController(Integer.parseInt(cbxNumeroBolsa.getSelectedItem().toString()));
@@ -478,6 +525,7 @@ public class FrmBolsa extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCrearBolsas;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cbxNumeroBolsa;
     private javax.swing.JComboBox<String> cbxNumeroElementos;
     private javax.swing.JComboBox<String> cbxSeleccionarBolsa;
@@ -491,9 +539,6 @@ public class FrmBolsa extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -502,6 +547,10 @@ public class FrmBolsa extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JMenuItem jmenuCargar;
+    private javax.swing.JMenuItem jmenuCargarJson;
+    private javax.swing.JMenuItem jmenuGuardar;
+    private javax.swing.JMenuItem jmenuGuardarJson;
     private javax.swing.JLabel lblBolsa;
     private javax.swing.JLabel lblTipoE;
     private javax.swing.JTable tbltabla;
